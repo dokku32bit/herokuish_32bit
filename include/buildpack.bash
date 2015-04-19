@@ -77,6 +77,9 @@ buildpack-execute() {
 		IFS='#' read url commit <<< "$BUILDPACK_URL"
 		buildpack-install "$url" "$commit" custom &> /dev/null
 
+		chown -R "$unprivileged_user:$unprivileged_group" "$buildpack_path/custom"
+
+
 		selected_name="$(unprivileged $selected_path/bin/detect $build_path)"
 	else
 		# force heroku-buildpack-multi to detect first if exists
